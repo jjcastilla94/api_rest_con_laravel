@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RealmsSeeder extends Seeder {
+class RealmSeeder extends Seeder {
     public function run() {
         DB::table('realms')->insert([
             ['name' => 'Gondor', 'ruler' => 'Aragorn', 'alignment' => 'Bien', 'region_id' => 4],

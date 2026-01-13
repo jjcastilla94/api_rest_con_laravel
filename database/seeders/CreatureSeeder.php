@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CreaturesSeeder extends Seeder {
+class CreatureSeeder extends Seeder {
     public function run() {
         DB::table('creatures')->insert([
             ['name' => 'Balrog', 'species' => 'Demonio', 'threat_level' => 10, 'region_id' => 2],

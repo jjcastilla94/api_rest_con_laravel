@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class RegionsSeeder extends Seeder {
+class RegionSeeder extends Seeder {
     public function run() {
         DB::table('regions')->insert([
             ['name' => 'Eriador'],
