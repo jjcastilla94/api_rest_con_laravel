@@ -9,8 +9,13 @@ class Artifact extends Model{
         'name', 'type', 'origin_realm_id', 'power_level', 'description'
     ];
 
-    public function realm(){
+    public function originRealm(){
         return $this->belongsTo(Realm::class, 'origin_realm_id');
+    }
+
+    // Alias to keep backwards compatibility when accessing realm
+    public function realm(){
+        return $this->originRealm();
     }
 
     public function heroes(){

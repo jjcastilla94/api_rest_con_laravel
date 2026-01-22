@@ -3,46 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hero;
 
 class HeroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        return Hero::with('realm')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show($id) {
+        return Hero::with(['realm', 'artifacts'])->findOrFail($id);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function store(Request $request) {
+        return Hero::create($request->all());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $hero = Hero::findOrFail($id);
+        $hero->update($request->all());
+        return $hero;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id) {
+        Hero::destroy($id);
+        return response()->json(['message' => 'Héroe eliminado']);
+    }
+
+    // Endpoint adicional
+    public function alive() {
+        return Hero::where('alive', true)->get();
     }
 }

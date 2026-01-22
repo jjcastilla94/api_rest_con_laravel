@@ -2,47 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\Creature;
 use Illuminate\Http\Request;
 
 class CreatureController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        return Creature::with('region')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function show($id) {
+        return Creature::with('region')->findOrFail($id);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'species' => 'required',
+            'threat_level' => 'required|integer|min:1|max:10',
+            'region_id' => 'required|exists:regions,id'
+        ]);
+
+        return Creature::create($request->all());
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $creature = Creature::findOrFail($id);
+        $creature->update($request->all());
+        return $creature;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id) {
+        Creature::destroy($id);
+        return response()->json(['message' => 'Criatura eliminada']);
+    }
+
+    // Endpoint opcional
+    public function dangerous(Request $request) {
+        $level = $request->get('level', 8);
+
+        return Creature::where('threat_level', '>=', $level)->get();
     }
 }

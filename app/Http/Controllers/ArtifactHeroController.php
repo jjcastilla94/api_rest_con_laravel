@@ -3,46 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hero;
 
 class ArtifactHeroController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function store(Request $request) {
+        $hero = Hero::findOrFail($request->hero_id);
+        $hero->artifacts()->attach($request->artifact_id);
+
+        return response()->json(['message' => 'Artefacto asignado']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function destroy(Request $request) {
+        $hero = Hero::findOrFail($request->hero_id);
+        $hero->artifacts()->detach($request->artifact_id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'Artefacto retirado']);
     }
 }
