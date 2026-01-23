@@ -1,0 +1,312 @@
+{
+  "info": {
+    "name": "Tierra Media API REST - Colección Alvaro Castilla",
+    "description": "Colección propia con los endpoints mínimos y opcionales según controladores, seeders y migrations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost/api" },
+    { "key": "region_id", "value": "" },
+    { "key": "realm_id", "value": "" },
+    { "key": "hero_id", "value": "" },
+    { "key": "creature_id", "value": "" },
+    { "key": "artifact_id", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Regions",
+      "item": [
+        {
+          "name": "POST Region",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/regions",
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Region Demo\" }" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "pm.environment.set('region_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Region by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/regions/{{region_id}}" }
+        },
+        {
+          "name": "GET Regions",
+          "request": { "method": "GET", "url": "{{base_url}}/regions" }
+        },
+        {
+          "name": "PUT Region",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/regions/{{region_id}}",
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Region Demo Updated\" }" }
+          }
+        },
+        {
+          "name": "DELETE Region",
+          "request": { "method": "DELETE", "url": "{{base_url}}/regions/{{region_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Realms",
+      "item": [
+        {
+          "name": "POST Realm",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/realms",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Realm Demo\", \"ruler\": \"Rey Demo\", \"alignment\": \"Neutral\", \"region_id\": {{region_id}} }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "pm.environment.set('realm_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Realm by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/realms/{{realm_id}}" }
+        },
+        {
+          "name": "GET Realms",
+          "request": { "method": "GET", "url": "{{base_url}}/realms" }
+        },
+        {
+          "name": "PUT Realm",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/realms/{{realm_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Realm Demo Updated\", \"ruler\": \"Rey Demo\", \"alignment\": \"Bien\", \"region_id\": {{region_id}} }"
+            }
+          }
+        },
+        {
+          "name": "DELETE Realm",
+          "request": { "method": "DELETE", "url": "{{base_url}}/realms/{{realm_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Heroes",
+      "item": [
+        {
+          "name": "POST Hero",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/heroes",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Hero Demo\", \"race\": \"Humano\", \"rank\": \"Explorador\", \"realm_id\": {{realm_id}}, \"alive\": true }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "pm.environment.set('hero_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Hero by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/heroes/{{hero_id}}" }
+        },
+        {
+          "name": "GET Heroes",
+          "request": { "method": "GET", "url": "{{base_url}}/heroes" }
+        },
+        {
+          "name": "GET Heroes Alive (opcional)",
+          "request": { "method": "GET", "url": "{{base_url}}/heroes/alive" }
+        },
+        {
+          "name": "PUT Hero",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/heroes/{{hero_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Hero Demo Updated\", \"race\": \"Humano\", \"rank\": \"Capitan\", \"realm_id\": {{realm_id}}, \"alive\": false }"
+            }
+          }
+        },
+        {
+          "name": "DELETE Hero",
+          "request": { "method": "DELETE", "url": "{{base_url}}/heroes/{{hero_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Creatures",
+      "item": [
+        {
+          "name": "POST Creature",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/creatures",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Creature Demo\", \"species\": \"Bestia\", \"threat_level\": 5, \"region_id\": {{region_id}} }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "pm.environment.set('creature_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Creature by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/creatures/{{creature_id}}" }
+        },
+        {
+          "name": "GET Creatures",
+          "request": { "method": "GET", "url": "{{base_url}}/creatures" }
+        },
+        {
+          "name": "GET Creatures Dangerous (opcional)",
+          "request": { "method": "GET", "url": "{{base_url}}/creatures/dangerous?level=8" }
+        },
+        {
+          "name": "PUT Creature",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/creatures/{{creature_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Creature Demo Updated\", \"species\": \"Bestia\", \"threat_level\": 7, \"region_id\": {{region_id}} }"
+            }
+          }
+        },
+        {
+          "name": "DELETE Creature",
+          "request": { "method": "DELETE", "url": "{{base_url}}/creatures/{{creature_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Artifacts",
+      "item": [
+        {
+          "name": "POST Artifact",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/artifacts",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Artifact Demo\", \"type\": \"Espada\", \"origin_realm_id\": {{realm_id}}, \"power_level\": 75, \"description\": \"Artefacto de prueba\" }"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+                  "pm.environment.set('artifact_id', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Artifact by ID",
+          "request": { "method": "GET", "url": "{{base_url}}/artifacts/{{artifact_id}}" }
+        },
+        {
+          "name": "GET Artifacts",
+          "request": { "method": "GET", "url": "{{base_url}}/artifacts" }
+        },
+        {
+          "name": "GET Artifacts Top (opcional)",
+          "request": { "method": "GET", "url": "{{base_url}}/artifacts/top" }
+        },
+        {
+          "name": "PUT Artifact",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/artifacts/{{artifact_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"name\": \"Artifact Demo Updated\", \"type\": \"Espada\", \"origin_realm_id\": {{realm_id}}, \"power_level\": 60, \"description\": \"Artefacto actualizado\" }"
+            }
+          }
+        },
+        {
+          "name": "DELETE Artifact",
+          "request": { "method": "DELETE", "url": "{{base_url}}/artifacts/{{artifact_id}}" }
+        }
+      ]
+    },
+    {
+      "name": "Artifact-Hero Pivot (opcional)",
+      "item": [
+        {
+          "name": "POST Artifact-Hero attach",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/artifact-hero",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"artifact_id\": {{artifact_id}}, \"hero_id\": {{hero_id}} }"
+            }
+          }
+        },
+        {
+          "name": "DELETE Artifact-Hero detach",
+          "request": {
+            "method": "DELETE",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": "{{base_url}}/artifact-hero",
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"artifact_id\": {{artifact_id}}, \"hero_id\": {{hero_id}} }"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
