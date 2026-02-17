@@ -26,6 +26,7 @@ class HeroController extends Controller
     }
 
     public function destroy($id) {
+       Hero::findOrFail($id)->artifacts()->detach(); // Desvincula los artefactos asociados
         Hero::destroy($id);
         return response()->json(['message' => 'Héroe eliminado']);
     }
